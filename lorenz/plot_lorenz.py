@@ -1,61 +1,3 @@
-# import numpy as np
-# import matplotlib.pyplot as plt
-# from mpl_toolkits.mplot3d import Axes3D
-# from lorenz.lorenz import Lorenz
-
-
-# def plot_lorenz(lorenz: Lorenz):
-#     """
-#     Plots the evolution of the Lorenz system in 3D.
-
-#     Parameters
-#     ----------
-#     lorenz : Lorenz
-#         A Lorenz object.
-#     """
-#     fig = plt.figure()
-#     ax = fig.gca(projection="3d")
-
-#     # Plot the evolution of the Lorenz system
-#     ax.plot(
-#         lorenz.state_history[:, 0],
-#         lorenz.state_history[:, 1],
-#         lorenz.state_history[:, 2],
-#         "k-",
-#     )
-
-#     # Plot the final point with a different color
-#     ax.plot(
-#         lorenz.state_history[-1, 0],
-#         lorenz.state_history[-1, 1],
-#         lorenz.state_history[-1, 2],
-#         "r.",
-#         markersize=15,
-#     )
-
-#     # Plot the starting point with a different color
-#     ax.plot(
-#         lorenz.state_history[0, 0],
-#         lorenz.state_history[0, 1],
-#         lorenz.state_history[0, 2],
-#         "b.",
-#         markersize=15,
-#     )
-
-#     # Set the axes labels
-#     ax.set_xlabel("x")
-#     ax.set_ylabel("y")
-#     ax.set_zlabel("z")
-
-#     # Set the axes limits
-#     ax.set_xlim((-25, 25))
-#     ax.set_ylim((-35, 35))
-#     ax.set_zlim((5, 55))
-
-#     # Set the initial view angle
-#     ax.view_init(18, 30)
-
-#     plt.show()
 import numpy as np
 import matplotlib.pyplot as plt
 from mpl_toolkits.mplot3d import Axes3D
@@ -65,7 +7,17 @@ import matplotlib.animation as animation
 
 
 def plot_lorenz3D(lorenz: Lorenz):
-    """Plot the trajectory of the Lorenz system."""
+    """Plotting of the Lorenz system in 3D.
+
+    This function takes a Lorenz object and plots the trajectory of the system
+
+    Args:
+        lorenz (Lorenz): A Lorenz object
+
+    Returns:
+        A plot of the trajectory of the Lorenz system in 3D
+
+    """
 
     # Ensure the system has been solved before plotting
     if not lorenz.history:
@@ -93,7 +45,20 @@ def plot_lorenz3D(lorenz: Lorenz):
 
 
 def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
-    """Plot the trajectory of the Lorenz system."""
+    """Plotting of the Lorenz system in 2D.
+
+    This function takes a Lorenz object and plots the trajectory of the system
+    in 2D for the specified directions.
+
+    Args:
+        lorenz (Lorenz): A Lorenz object
+        directions (list, optional): A list of strings specifying the directions
+
+    Returns:
+        A plot of the trajectory of the Lorenz system in 2D
+
+
+    """
 
     # Ensure the system has been solved before plotting
     if not lorenz.history:
@@ -191,7 +156,21 @@ def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
 
 
 def animate_lorenz(lorenz: Lorenz):
-    """Animate the trajectory of the Lorenz system."""
+    """Animate the trajectory of the Lorenz system in 3D.
+
+    This function takes a Lorenz object and animates the trajectory of the system
+    in 3D.
+
+    Args:
+        lorenz (Lorenz): A Lorenz object
+
+    Returns:
+        An animation of the trajectory of the Lorenz system in 3D saved as a gif
+
+
+
+
+    """
 
     # Ensure the system has been solved before plotting
     if not lorenz.history:
@@ -234,7 +213,7 @@ def animate_lorenz(lorenz: Lorenz):
 
         return line, point
 
-    anim = FuncAnimation(fig, animate, frames=len(x), interval=30, blit=True)
+    anim = FuncAnimation(fig, animate, frames=len(x), interval=10, blit=True)
 
     # Save the animation
     anim.save("lorenz_attractor.gif", writer="imagemagick")
