@@ -84,6 +84,7 @@ class Lorenz:
 
         self.history = []
 
+    @profile
     def solve(self, method: str = "euler") -> List[Tuple[float, float, float]]:
         """
         Solves the Lorenz system for N time steps.
@@ -98,6 +99,11 @@ class Lorenz:
         -------
         list of tuple of float
             The state of the system (x, y, z) at each time step.
+
+        Examples
+        --------
+        >>> lorenz = Lorenz((0.0, 1.0, 1.05)).solve()
+
         """
         if method not in ("euler", "rk4"):
             raise ValueError('Method must be either "euler" or "rk4"')
@@ -114,7 +120,7 @@ class Lorenz:
 
         return self.history
 
-    # @jit(nopython=True)
+    @profile
     def step_euler(self) -> Tuple[float, float, float]:
         """
         Advances the state of the system one time step using the Euler method.
@@ -123,6 +129,10 @@ class Lorenz:
         -------
         tuple of float
             The new state of the system (x, y, z).
+
+        Examples
+        --------
+        lorenz = Lorenz((0.0, 1.0, 1.05)).step_euler()
         """
         x, y, z = self.state
         dx = self.sigma * (y - x)
