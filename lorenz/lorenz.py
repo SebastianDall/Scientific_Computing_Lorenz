@@ -1,5 +1,6 @@
 from typing import Tuple, List
-from numba import jit
+
+# from numba import jit
 
 
 class Lorenz:
