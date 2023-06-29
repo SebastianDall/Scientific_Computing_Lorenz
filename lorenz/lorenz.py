@@ -1,6 +1,18 @@
 from typing import Tuple, List
 
-# from numba import jit
+try:
+
+    @profile
+    def f(x):
+        return x
+
+except:
+
+    def profile(func):
+        def inner(*args, **kwargs):
+            return func(*args, **kwargs)
+
+        return inner
 
 
 class Lorenz:
@@ -26,6 +38,15 @@ class Lorenz:
         Advances the state of the system one time step using the Euler method.
     step_rk4():
         Advances the state of the system one time step using the Runge-Kutta 4 method.
+    solve(method="euler"):
+        Solves the Lorenz system for N time steps.
+
+    Examples
+    --------
+    >>> lorenz = Lorenz((0.0, 1.0, 1.05))
+    >>> lorenz.solve()
+
+
     """
 
     def __init__(
