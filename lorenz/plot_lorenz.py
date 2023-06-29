@@ -6,13 +6,14 @@ from lorenz.lorenz import Lorenz
 import matplotlib.animation as animation
 
 
-def plot_lorenz3D(lorenz: Lorenz):
+def plot_lorenz3D(lorenz: Lorenz, filename: str = None):
     """Plotting of the Lorenz system in 3D.
 
     This function takes a Lorenz object and plots the trajectory of the system
 
     Args:
         lorenz (Lorenz): A Lorenz object
+        filename (str, optional): The filename to save the plot to. Defaults to None.
 
     Returns:
         A plot of the trajectory of the Lorenz system in 3D
@@ -42,9 +43,12 @@ def plot_lorenz3D(lorenz: Lorenz):
     ax.set_title("Lorenz Attractor")
 
     plt.show()
+    plt.savefig(filename)
 
 
-def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
+def plot_lorenz2D(
+    lorenz: Lorenz, directions: list = ["xy", "xz", "yz"], filename: str = None
+):
     """Plotting of the Lorenz system in 2D.
 
     This function takes a Lorenz object and plots the trajectory of the system
@@ -53,6 +57,7 @@ def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
     Args:
         lorenz (Lorenz): A Lorenz object
         directions (list, optional): A list of strings specifying the directions
+        filename (str, optional): The filename to save the plot to
 
     Returns:
         A plot of the trajectory of the Lorenz system in 2D
@@ -112,6 +117,7 @@ def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
     plt.tight_layout()  # Ensure subplots do not overlap
     plt.subplots_adjust(right=0.9)  # Adjust the right boundary of the plot window
     plt.show()
+    plt.savefig(filename)
 
 
 # def animate_lorenz(lorenz: Lorenz):
@@ -155,7 +161,72 @@ def plot_lorenz2D(lorenz: Lorenz, directions: list = ["xy", "xz", "yz"]):
 #     plt.show()
 
 
-def animate_lorenz(lorenz: Lorenz):
+# def animate_lorenz(lorenz: Lorenz, filename: str = None):
+#     """Animate the trajectory of the Lorenz system in 3D.
+
+#     This function takes a Lorenz object and animates the trajectory of the system
+#     in 3D.
+
+#     Args:
+#         lorenz (Lorenz): A Lorenz object
+#         filename (str, optional): The filename to save the animation as a gif
+
+#     Returns:
+#         An animation of the trajectory of the Lorenz system in 3D saved as a gif
+
+
+#     """
+
+#     # Ensure the system has been solved before plotting
+#     if not lorenz.history:
+#         lorenz.solve()
+
+#     # Unpack the history into separate x, y, and z lists
+#     x, y, z = zip(*lorenz.history)
+
+#     fig = plt.figure()
+#     ax = fig.add_subplot(111, projection="3d")
+
+#     # Create a color array (from 0 to 1) one for each point in the trajectory
+#     colors = plt.cm.viridis(np.linspace(0, 1, len(x)))
+
+#     # Add a line object for the trajectory
+#     (line,) = ax.plot([], [], [], color="blue", lw=2)
+
+#     # Add a point object for the current position
+#     (point,) = ax.plot([], [], [], color="red", marker="o")
+
+#     ax.set_xlim([min(x), max(x)])
+#     ax.set_ylim([min(y), max(y)])
+#     ax.set_zlim([min(z), max(z)])
+
+#     ax.set_xlabel("X Axis")
+#     ax.set_ylabel("Y Axis")
+#     ax.set_zlabel("Z Axis")
+#     ax.set_title("Lorenz Attractor")
+
+#     def animate(i):
+#         # Update the line data
+#         line.set_data(x[:i], y[:i])
+#         line.set_3d_properties(z[:i])
+#         line.set_color(colors[i])
+
+#         # Update the point data
+#         point.set_data(x[i], y[i])
+#         point.set_3d_properties(z[i])
+#         point.set_color(colors[i])
+
+#         return line, point
+
+#     anim = FuncAnimation(fig, animate, frames=len(x), interval=10, blit=True)
+
+#     # Save the animation
+#     anim.save(filename, writer="imagemagick")
+
+#     plt.show()
+
+
+def animate_lorenz(lorenz: Lorenz, filename=None):
     """Animate the trajectory of the Lorenz system in 3D.
 
     This function takes a Lorenz object and animates the trajectory of the system
@@ -163,15 +234,13 @@ def animate_lorenz(lorenz: Lorenz):
 
     Args:
         lorenz (Lorenz): A Lorenz object
+        filename (str, optional): The filename to save the animation as a gif
 
     Returns:
         An animation of the trajectory of the Lorenz system in 3D saved as a gif
 
 
-
-
     """
-
     # Ensure the system has been solved before plotting
     if not lorenz.history:
         lorenz.solve()
@@ -185,12 +254,6 @@ def animate_lorenz(lorenz: Lorenz):
     # Create a color array (from 0 to 1) one for each point in the trajectory
     colors = plt.cm.viridis(np.linspace(0, 1, len(x)))
 
-    # Add a line object for the trajectory
-    (line,) = ax.plot([], [], [], color="blue", lw=2)
-
-    # Add a point object for the current position
-    (point,) = ax.plot([], [], [], color="red", marker="o")
-
     ax.set_xlim([min(x), max(x)])
     ax.set_ylim([min(y), max(y)])
     ax.set_zlim([min(z), max(z)])
@@ -200,22 +263,24 @@ def animate_lorenz(lorenz: Lorenz):
     ax.set_zlabel("Z Axis")
     ax.set_title("Lorenz Attractor")
 
+    lines = []
+
     def animate(i):
-        # Update the line data
-        line.set_data(x[:i], y[:i])
-        line.set_3d_properties(z[:i])
-        line.set_color(colors[i])
+        # If a line for this time step already exists, just update its data
+        if i < len(lines):
+            line = lines[i]
+            line.set_data(x[:i], y[:i])
+            line.set_3d_properties(z[:i])
+        else:
+            # Otherwise, create a new line for this time step
+            (line,) = ax.plot(x[:i], y[:i], z[:i], color=colors[i])
+            lines.append(line)
 
-        # Update the point data
-        point.set_data(x[i], y[i])
-        point.set_3d_properties(z[i])
-        point.set_color(colors[i])
+        return lines
 
-        return line, point
-
-    anim = FuncAnimation(fig, animate, frames=len(x), interval=10, blit=True)
+    anim = FuncAnimation(fig, animate, frames=len(x), interval=30, blit=True)
 
     # Save the animation
-    anim.save("lorenz_attractor.gif", writer="imagemagick")
+    anim.save(filename, writer="imagemagick")
 
     plt.show()
