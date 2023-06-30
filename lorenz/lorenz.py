@@ -142,32 +142,4 @@ class Lorenz:
         return self.state
 
     def step_rk4(self) -> Tuple[float, float, float]:
-        """
-        Advances the state of the system one time step using the Runge-Kutta 4 method.
-
-        Returns
-        -------
-        tuple of float
-            The new state of the system (x, y, z).
-
-        Note
-        ----
-        This method has not been implemented yet.
-        """
-        # def rk4(x, y, z, dt):
-        #     k1 = dt*f(x, y, z)
-        #     l1 = dt*g(x, y, z)
-        #     m1 = dt*h(x, y, z)
-        #     k2 = dt*f(x+k1/2, y+l1/2, z+m1/2)
-        #     l2 = dt*g(x+k1/2, y+l1/2, z+m1/2)
-        #     m2 = dt*h(x+k1/2, y+l1/2, z+m1/2)
-        #     k3 = dt*f(x+k2/2, y+l2/2, z+m2/2)
-        #     l3 = dt*g(x+k2/2, y+l2/2, z+m2/2)
-        #     m3 = dt*h(x+k2/2, y+l2/2, z+m2/2)
-        #     k4 = dt*f(x+k3, y+l3, z+m3)
-        #     l4 = dt*g(x+k3, y+l3, z+m3)
-        #     m4 = dt*h(x+k3, y+l3, z+m3)
-        #     x += (k1+2*k2+2*k3+k4)/6
-        #     y += (l1+2*l2+2*l3+l4)/6
-        #     z += (m1+2*m2+2*m3+m4)/6
         pass  # implement RK4 approximation here
