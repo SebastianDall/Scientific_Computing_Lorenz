@@ -1,12 +1,14 @@
 # Scientific Computing using Python (2023)
 
-This repository contains the code and documentation for simulating the Lorenz Attractor solutions to the Lorenz system. The assignment is a part of the course Scientific Computing using Python at Aalborg University. The code is implemented in Python 3.11.3 using anaconda 1.11.2. All code considerations and results can be found at the [assignment]().
+This repository contains the code and documentation for simulating the Lorenz Attractor solutions to the Lorenz system. The assignment is a part of the course Scientific Computing using Python at Aalborg University. The code is implemented in Python 3.11.3 using anaconda 1.11.2. All code considerations and results can be found at the [assignment](#assignment).
+
+The best way to read this repo is at github. Follow the [link](https://github.com/SebastianDall/Scientific_Computing_Lorenz.git) to the repo.
 
 ## Installation
 
 All code was developed in a docker container and vscode. To create all the figures and files for running the code, simply run the following command:
 
-> This will firstly build the docker image and create the conda environment. Secondly, the code will be run in the docker container.
+> This will firstly build the docker image and create the conda environment. Secondly, the code will be run in the docker container. (note this will run in python 3.10)
 
 ```bash
 docker build -f docker/Dockerfile -t scp_in_python ./docker
@@ -18,7 +20,7 @@ docker run -it --rm -v ${PWD}:/workspaces/Scientific_Computing_Lorenz \
 Alternatively, the code can be run locally with [anaconda](https://www.anaconda.com/). Firstly, create the environment, run the following command:
 
 ```bash
-conda create scip_1
+conda create -n scip_1 python=3.11.3
 ```
 
 Then activate the environment with:
