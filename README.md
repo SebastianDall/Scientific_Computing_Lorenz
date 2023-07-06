@@ -6,23 +6,31 @@ This repository contains the code and documentation for simulating the Lorenz At
 
 All code was developed in a docker container and vscode. To create all the figures and files for running the code, simply run the following command:
 
-> This will firstly build the docker image and create the conda environment. This build process can take a long time. Secondly, the code will be run in the docker container.
+> This will firstly build the docker image and create the conda environment. Secondly, the code will be run in the docker container.
 
 ```bash
 docker build -f docker/Dockerfile -t scp_in_python ./docker
-docker run -it --rm -v ${PWD}:/workspaces/Scientific_Computing_Lorenz -w /workspaces/Scientific_Computing_Lorenz scp_in_python /bin/bash -c "pytest && python3 main.py"
+docker run -it --rm -v ${PWD}:/workspaces/Scientific_Computing_Lorenz \
+-w /workspaces/Scientific_Computing_Lorenz scp_in_python /bin/bash \
+-c "conda install scipy matplotlib numpy line_profiler h5py -y && pytest && python3 main.py"
 ```
 
-Alternatively, the code can be run locally with [anaconda](https://www.anaconda.com/). Firstly, to recreate the environment, run the following command:
+Alternatively, the code can be run locally with [anaconda](https://www.anaconda.com/). Firstly, create the environment, run the following command:
 
 ```bash
-conda env create -f docker/environment.yml
+conda create scip_1
 ```
 
 Then activate the environment with:
 
 ```bash
-conda activate scip1
+conda activate scip_1
+```
+
+Then install the packages with:
+
+```bash
+conda install scipy matplotlib numpy line_profiler h5py -y
 ```
 
 Finally, run the following command to create all the figures and files for running the code:

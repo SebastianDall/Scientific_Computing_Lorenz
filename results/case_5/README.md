@@ -1,5 +1,5 @@
 # Case 5
-Run on 2023-06-29 12:09:57.219048
+Run on 2023-07-06 16:06:05.151103
 
 ## Parameters
 Initial conditions: [1, 1, 1]
